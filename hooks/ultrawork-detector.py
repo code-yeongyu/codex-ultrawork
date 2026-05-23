@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from typing import cast
 
 
 # `\b(?:ultrawork|ulw)\b` — word-bounded match excludes paths and identifiers.
@@ -118,8 +119,9 @@ Trigger when ANY apply:
   anything the user called "깊게" / "deeply".
 
 Procedure (NON-NEGOTIABLE):
-1. Spawn (or hand off to) a `gpt-5.2` xhigh reviewer. Pass: goal,
-   success-criteria, scenario evidence, full diff, notepad path.
+1. Spawn agent_type `codex-ultrawork-reviewer` (or any `gpt-5.2`
+   xhigh reviewer if unavailable). Pass: goal, success-criteria,
+   scenario evidence, full diff, notepad path.
 2. Treat the reviewer's verdict as binding. There is NO "false
    positive". Every concern is real. Do not argue. Do not minimise. Do
    not explain it away.
@@ -174,12 +176,13 @@ def _load_payload() -> dict[str, object] | None:
     if not raw.strip():
         return None
     try:
-        parsed: object = json.loads(raw)
+        parsed = cast(object, json.loads(raw))
     except json.JSONDecodeError:
         return None
     if not isinstance(parsed, dict):
         return None
-    return {str(k): v for k, v in parsed.items()}
+    values = cast(dict[object, object], parsed)
+    return {str(k): v for k, v in values.items()}
 
 
 def _should_inject(payload: dict[str, object]) -> bool:
