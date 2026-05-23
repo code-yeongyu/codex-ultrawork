@@ -11,15 +11,18 @@ Conventions for human contributors and AI agents working on this repository.
 
 ## Layout
 
-- `hooks/ultrawork-detector.py` — the only behavior. Pure stdlib. Reads JSON on stdin, writes the directive to stdout when the keyword matches, exits 0 otherwise.
-- `hooks/hooks.json` — registers the script under `UserPromptSubmit`.
+- `hooks/ultrawork-detector.py` — pure stdlib `UserPromptSubmit` hook. Reads JSON on stdin, writes the directive to stdout when the keyword matches, exits 0 otherwise.
+- `hooks/sync-agents.py` — pure stdlib `SessionStart` hook. Copies bundled `agents/*.toml` into `CODEX_HOME/agents`, exits 0.
+- `agents/*.toml` — bundled Codex agent role files.
+- `hooks/hooks.json` — registers hook scripts.
 - `.codex-plugin/plugin.json` — Codex plugin manifest. Marketplace metadata lives here, not in `package.json`.
 
 ## Constraints
 
 - Never let the hook block a turn — exit code is always 0.
 - Never make a network call from the hook.
-- Keep the directive in `ULTRAWORK_DIRECTIVE` self-contained inside the Python file. The hook is a single artifact a reviewer can read top-to-bottom.
+- Keep the directive in `ULTRAWORK_DIRECTIVE` self-contained inside the Python file. The prompt hook is a single artifact a reviewer can read top-to-bottom.
+- Keep bundled agent role prompts concise and model-specific; measure prompt length when changing them.
 - When editing `ULTRAWORK_DIRECTIVE`, apply the `prompt-engineering` skill's entropy gate: every edit must reduce uncertainty per token. Re-measure character count before committing.
 
 ## Commands
