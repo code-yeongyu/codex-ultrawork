@@ -1,0 +1,29 @@
+{
+	"name": "@code-yeongyu/codex-ultrawork",
+	"version": "0.1.0",
+	"description": "Codex plugin that injects the ultrawork orchestration directive when the user prompt contains `ultrawork` or `ulw`.",
+	"type": "module",
+	"license": "MIT",
+	"homepage": "https://github.com/code-yeongyu/codex-ultrawork",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/code-yeongyu/codex-ultrawork.git"
+	},
+	"bugs": {
+		"url": "https://github.com/code-yeongyu/codex-ultrawork/issues"
+	},
+	"keywords": [
+		"codex",
+		"codex-plugin",
+		"ultrawork",
+		"hooks",
+		"orchestration"
+	],
+	"files": [
+		".codex-plugin",
+		"hooks",
+		"README.md",
+		"LICENSE",
+		"NOTICE"
+	]
+}
