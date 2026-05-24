@@ -43,7 +43,8 @@ every change, no exceptions.
 
 ## 1. Create the goal with binding success criteria
 Call `create_goal` (or open your reply with a `# Goal` block treated as
-binding). Goals are unlimited; never invent a numeric budget or limit.
+binding) using exactly `objective` and `status` fields. Goals are
+unlimited; never invent a numeric budget or limit.
 The criteria MUST list, upfront:
 - The user-visible deliverable in one line.
 - 3+ realistic QA scenarios: happy path, edge cases (boundary / empty /

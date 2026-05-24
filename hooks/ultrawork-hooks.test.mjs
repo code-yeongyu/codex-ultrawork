@@ -113,7 +113,8 @@ test("#given ultrawork prompt #when detector runs #then directive keeps goal bud
 	assert.equal(result.code, 0);
 	assert.equal(result.signal, null);
 	assert.equal(result.stderr, "");
-	assert.match(result.stdout, /Goals are unlimited/);
+	assert.match(result.stdout, /Goals are\s+unlimited/);
+	assert.match(result.stdout, /exactly `objective` and `status` fields/);
 	assert.doesNotMatch(result.stdout, /token[_-]?budget/i);
 	assert.doesNotMatch(result.stdout, /200000/i);
 });
