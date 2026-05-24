@@ -24,7 +24,6 @@
 		"test": "node --test hooks/*.test.mjs"
 	},
 	"files": [
-		".codex-plugin",
 		"agents",
 		"hooks/hooks.json",
 		"hooks/sync-agents.py",

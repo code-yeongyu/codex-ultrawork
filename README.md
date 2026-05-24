@@ -20,7 +20,7 @@ codex plugin marketplace add /path/to/codex-plugins
 node /path/to/codex-plugins/scripts/install-local.mjs /path/to/codex-plugins
 ```
 
-The installer copies the plugin into `~/.codex/plugins/cache/code-yeongyu-codex-plugins/codex-ultrawork/<version>`, enables it in `~/.codex/config.toml`, and registers the `UserPromptSubmit` and `SessionStart` hooks.
+The installer copies the plugin into `~/.codex/plugins/cache/code-yeongyu-codex-plugins/omo/0.1.0`, enables it in `~/.codex/config.toml`, and registers the `UserPromptSubmit` and `SessionStart` hooks.
 
 ## How it works
 

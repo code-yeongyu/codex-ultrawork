@@ -102,6 +102,22 @@ test("#given ultrawork prompt #when detector runs #then emits directive", async 
 	assert.match(result.stdout, /First user-visible line this turn MUST be exactly:/);
 });
 
+test("#given ultrawork prompt #when detector runs #then directive keeps goal budget unlimited", async () => {
+	const payload = JSON.stringify({
+		hook_event_name: "UserPromptSubmit",
+		prompt: "please ultrawork this change",
+	});
+
+	const result = await runPython(detectorPath, payload);
+
+	assert.equal(result.code, 0);
+	assert.equal(result.signal, null);
+	assert.equal(result.stderr, "");
+	assert.match(result.stdout, /Goals are unlimited/);
+	assert.doesNotMatch(result.stdout, /token[_-]?budget/i);
+	assert.doesNotMatch(result.stdout, /200000/i);
+});
+
 test("#given identifier-like ulw #when detector runs #then does not emit directive", async () => {
 	const payload = JSON.stringify({
 		hook_event_name: "UserPromptSubmit",
@@ -127,5 +143,15 @@ test("#given hook manifest #when read #then registers prompt and session hooks",
 		manifest.hooks.SessionStart[0].hooks[0].command,
 		/sync-agents\.py/,
 	);
-	assert.equal(pluginRoot.endsWith("codex-ultrawork"), true);
+	assert.equal(pluginRoot.endsWith("components/ultrawork"), true);
+});
+
+test("#given component package #when inspected #then plugin identity is owned by aggregate root", async () => {
+	const pkg = JSON.parse(await readFile(join(pluginRoot, "package.json"), "utf8"));
+
+	assert.equal(pkg.files.includes(".codex-plugin"), false);
+	await assert.rejects(
+		readFile(join(pluginRoot, ".codex-plugin", "plugin.json"), "utf8"),
+		/code: 'ENOENT'|ENOENT/,
+	);
 });
